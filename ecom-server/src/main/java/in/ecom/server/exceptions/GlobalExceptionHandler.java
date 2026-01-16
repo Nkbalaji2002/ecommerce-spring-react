@@ -1,5 +1,6 @@
 package in.ecom.server.exceptions;
 
+import in.ecom.server.response.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -18,8 +19,8 @@ public class GlobalExceptionHandler {
         Map<String, String> response = new HashMap<>();
 
         e.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError)error).getField();
-            String message = ((FieldError)error).getDefaultMessage();
+            String fieldName = ((FieldError) error).getField();
+            String message = ((FieldError) error).getDefaultMessage();
 
             response.put(fieldName, message);
         });
@@ -29,12 +30,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        APIResponse apiResponse = new APIResponse(e.getMessage(), false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGenericEntity(Exception exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<?> handleGenericEntity(Exception e) {
+        APIResponse apiResponse = new APIResponse(e.getMessage(), false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
