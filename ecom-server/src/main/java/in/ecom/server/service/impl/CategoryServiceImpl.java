@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (categories.isEmpty()) {
             throw new APIException("No category created till now.");
         }
-        
+
         return categories;
     }
 

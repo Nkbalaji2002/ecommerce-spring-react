@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class CategoryController {
@@ -32,20 +31,14 @@ public class CategoryController {
 
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
-        try {
-            return new ResponseEntity<>(categoryService.delete(categoryId), HttpStatus.OK);
-        } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
-        }
+        var category = categoryService.delete(categoryId);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @PutMapping("/admin/categories/{categoryId}")
-    public ResponseEntity<?> updateCategory(@RequestBody Category category, @PathVariable Long categoryId) {
-        try {
-            return new ResponseEntity<>(categoryService.update(category, categoryId), HttpStatus.OK);
-        } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
-        }
+    public ResponseEntity<?> updateCategory(@Valid @RequestBody Category category, @PathVariable Long categoryId) {
+        var updatedCategory = categoryService.update(category, categoryId);
+        return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
 
 }
