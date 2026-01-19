@@ -1,5 +1,6 @@
 package in.ecom.server.service.impl;
 
+import in.ecom.server.exceptions.APIException;
 import in.ecom.server.exceptions.ResourceNotFoundException;
 import in.ecom.server.model.Category;
 import in.ecom.server.repository.CategoryRepository;
@@ -17,7 +18,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        var categories = categoryRepository.findAll();
+
+        if (categories.isEmpty()) {
+            throw new APIException("No category created till now.");
+        }
+        
+        return categories;
     }
 
     @Override
