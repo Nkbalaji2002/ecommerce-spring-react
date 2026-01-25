@@ -1,12 +1,11 @@
 package in.ecom.server.service;
 
 import in.ecom.server.model.Category;
-
-import java.util.List;
+import in.ecom.server.payload.CategoryResponse;
 
 public interface CategoryService {
 
-    List<Category> getAllCategories();
+    CategoryResponse getAllCategories();
 
     void createCategory(Category category);
 
