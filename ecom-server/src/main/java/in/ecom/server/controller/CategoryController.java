@@ -1,6 +1,5 @@
 package in.ecom.server.controller;
 
-import in.ecom.server.model.Category;
 import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 import in.ecom.server.service.CategoryService;
@@ -34,7 +33,7 @@ public class CategoryController {
 
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
-        var category = categoryService.delete(categoryId);
+        CategoryDTO category = categoryService.delete(categoryId);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 

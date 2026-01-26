@@ -7,7 +7,6 @@ import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 import in.ecom.server.repository.CategoryRepository;
 import in.ecom.server.service.CategoryService;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,12 +52,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String delete(Long categoryId) {
+    public CategoryDTO delete(Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
         categoryRepository.delete(category);
-        return "Category with categoryId : " + categoryId + " deleted successfully!!!";
+        return modelMapper.map(category, CategoryDTO.class);
     }
 
     @Override
