@@ -7,6 +7,7 @@ import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 import in.ecom.server.repository.CategoryRepository;
 import in.ecom.server.service.CategoryService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,12 +62,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Category category, Long categoryId) {
-        Category updatedCategory = categoryRepository.findById(categoryId)
+    public CategoryDTO update(CategoryDTO categoryDTO, Long categoryId) {
+        Category savedCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
 
-        updatedCategory.setCategoryName(category.getCategoryName());
+        Category category = modelMapper.map(categoryDTO, Category.class);
+        category.setCategoryId(categoryId);
 
-        return categoryRepository.save(updatedCategory);
+        return modelMapper.map(categoryRepository.save(category), CategoryDTO.class);
     }
 }

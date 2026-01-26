@@ -3,6 +3,7 @@ package in.ecom.server.service;
 import in.ecom.server.model.Category;
 import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
+import jakarta.validation.Valid;
 
 public interface CategoryService {
 
@@ -12,6 +13,6 @@ public interface CategoryService {
 
     String delete(Long categoryId);
 
-    Category update(Category category, Long categoryId);
+    CategoryDTO update(@Valid CategoryDTO category, Long categoryId);
 
 }
