@@ -1,13 +1,14 @@
 package in.ecom.server.service;
 
 import in.ecom.server.model.Category;
+import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 
 public interface CategoryService {
 
     CategoryResponse getAllCategories();
 
-    void createCategory(Category category);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
 
     String delete(Long categoryId);
 

@@ -1,8 +1,6 @@
 package in.ecom.server.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -10,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class CategoryDTO {
 
     private Long categoryId;
-    private String CategoryName;
+    private String categoryName;
 
 }
