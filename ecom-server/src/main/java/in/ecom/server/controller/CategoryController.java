@@ -1,10 +1,12 @@
 package in.ecom.server.controller;
 
+import in.ecom.server.config.AppConstants;
 import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 import in.ecom.server.service.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +28,12 @@ public class CategoryController {
 
     @GetMapping("/public/categories")
     public ResponseEntity<?> getAllCategories(
-            @RequestParam Integer pageNumber,
-            @RequestParam Integer pageSize
+            @RequestParam(name = "pageNumber", defaultValue = "${app.pagination.default-page-number}", required = false) Integer pageNumber,
+            @RequestParam(name ="pageSize", defaultValue = "${app.pagination.default-page-size}", required = false) Integer pageSize,
+            @RequestParam(defaultValue = AppConstants.SORT_CATEGORIES_BY, required = false) String sortBy,
+            @RequestParam(defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder
     ) {
-        CategoryResponse categoryResponse = categoryService.getAllCategories(pageNumber, pageSize);
+        CategoryResponse categoryResponse = categoryService.getAllCategories(pageNumber, pageSize, sortBy, sortOrder);
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
