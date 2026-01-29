@@ -1,6 +1,6 @@
 package in.ecom.server.exceptions;
 
-import in.ecom.server.response.APIResponse;
+import in.ecom.server.payload.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
         e.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
-            String message = ((FieldError) error).getDefaultMessage();
+            String message = error.getDefaultMessage();
 
             response.put(fieldName, message);
         });
