@@ -6,10 +6,7 @@ import in.ecom.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -21,6 +18,12 @@ public class ProductController {
     public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable Long categoryId) {
         ProductDTO productDTO = productService.addProduct(categoryId, product);
         return new ResponseEntity<>(productDTO, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/public/products")
+    public ResponseEntity<?> getAllProducts() {
+        var response = productService.getAllProducts();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

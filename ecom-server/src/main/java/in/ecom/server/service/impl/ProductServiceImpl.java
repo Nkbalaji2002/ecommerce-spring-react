@@ -4,6 +4,7 @@ import in.ecom.server.exceptions.ResourceNotFoundException;
 import in.ecom.server.model.Category;
 import in.ecom.server.model.Product;
 import in.ecom.server.payload.ProductDTO;
+import in.ecom.server.payload.ProductResponse;
 import in.ecom.server.repository.CategoryRepository;
 import in.ecom.server.repository.ProductRepository;
 import in.ecom.server.service.ProductService;
@@ -37,5 +38,16 @@ public class ProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product);
 
         return modelMapper.map(savedProduct, ProductDTO.class);
+    }
+
+    @Override
+    public ProductResponse getAllProducts() {
+        var products = productRepository.findAll();
+        var productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class)).toList();
+
+        var productResponse = new ProductResponse();
+        productResponse.setContent(productDTOs);
+        return productResponse;
+
     }
 }
