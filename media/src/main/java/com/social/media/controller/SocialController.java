@@ -26,4 +26,10 @@ public class SocialController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        socialService.deleteUser(id);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+    }
+
 }
