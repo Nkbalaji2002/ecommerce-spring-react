@@ -12,6 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -60,6 +62,16 @@ public class ProductServiceImpl implements ProductService {
 
         var productResponse = new ProductResponse();
         productResponse.setContent(productsDTOs);
+        return productResponse;
+    }
+
+    @Override
+    public ProductResponse searchProductByKeyword(String keyword) {
+        var products = productRepository.findByProductNameLikeIgnoreCase("%" + keyword + "%");
+        List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class)).toList();
+
+        var productResponse = new ProductResponse();
+        productResponse.setContent(productDTOs);
         return productResponse;
     }
 }
