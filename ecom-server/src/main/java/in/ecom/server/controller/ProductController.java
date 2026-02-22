@@ -1,12 +1,14 @@
 package in.ecom.server.controller;
 
-import in.ecom.server.model.Product;
 import in.ecom.server.payload.ProductDTO;
 import in.ecom.server.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 public class ProductController {
@@ -50,6 +52,13 @@ public class ProductController {
     public ResponseEntity<?> deleteProduct(@PathVariable Long productId) {
         var productDTO = productService.deleteProduct(productId);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
+    /* update product image */
+    @PutMapping("/products/{productId}/image")
+    public ResponseEntity<?> updateProductImage(@PathVariable Long productId, @RequestParam("image") MultipartFile image) throws IOException {
+        ProductDTO updatedProduct = productService.updateProductImage(productId, image);
+        return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
 }
