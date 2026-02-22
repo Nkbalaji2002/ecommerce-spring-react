@@ -138,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
 
         /* eg:- mat.jpg --> 1234 ---> 1234.jpg */
         String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
-        String filePath = path + File.pathSeparator + fileName;
+        String filePath = path + File.separator + fileName;
 
         /* Check if path exist and create */
         File folder = new File(path);
