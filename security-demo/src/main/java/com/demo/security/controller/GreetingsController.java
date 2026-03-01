@@ -56,7 +56,7 @@ public class GreetingsController {
         try {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUserName(),
+                            loginRequest.getUsername(),
                             loginRequest.getPassword()
                     )
             );
@@ -77,7 +77,7 @@ public class GreetingsController {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        LoginResponse response = new LoginResponse(userDetails.getUsername(), jwtToken, roles);
+        LoginResponse response = new LoginResponse(jwtToken, userDetails.getUsername(), roles);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
