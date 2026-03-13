@@ -3,14 +3,14 @@ package in.ecom.server.controller;
 import in.ecom.server.model.AppRole;
 import in.ecom.server.model.Role;
 import in.ecom.server.model.User;
+import in.ecom.server.repository.RoleRepository;
+import in.ecom.server.repository.UserRepository;
 import in.ecom.server.security.jwt.JwtUtils;
 import in.ecom.server.security.request.LoginRequest;
 import in.ecom.server.security.request.SignUpRequest;
 import in.ecom.server.security.response.MessageResponse;
 import in.ecom.server.security.response.UserInfoResponse;
 import in.ecom.server.security.services.impl.UserDetailsImpl;
-import in.ecom.server.repository.RoleRepository;
-import in.ecom.server.security.services.repos.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,13 +41,13 @@ public class AuthController {
     private JwtUtils jwtUtils;
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
 
     @PostMapping("sign-in")
@@ -87,7 +87,7 @@ public class AuthController {
 
     @PostMapping("sign-up")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if (userRepository.existByUserName(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken"));
         }
 
