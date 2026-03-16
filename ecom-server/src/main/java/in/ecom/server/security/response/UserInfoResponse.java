@@ -8,14 +8,20 @@ public class UserInfoResponse {
 
     private String jwtToken;
 
-    private String userName;
+    private String username;
 
     private List<String> roles;
 
     public UserInfoResponse(Long id, String jwtToken, String userName, List<String> roles) {
         this.id = id;
         this.jwtToken = jwtToken;
-        this.userName = userName;
+        this.username = userName;
+        this.roles = roles;
+    }
+
+    public UserInfoResponse(Long id, String username, List<String> roles) {
+        this.id = id;;
+        this.username = username;
         this.roles = roles;
     }
 
@@ -27,12 +33,12 @@ public class UserInfoResponse {
         this.jwtToken = jwtToken;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<String> getRoles() {
