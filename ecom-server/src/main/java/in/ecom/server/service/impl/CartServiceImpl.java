@@ -11,6 +11,7 @@ import in.ecom.server.repository.CartItemRepository;
 import in.ecom.server.repository.CartRepository;
 import in.ecom.server.repository.ProductRepository;
 import in.ecom.server.service.CartService;
+import in.ecom.server.util.AuthUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,13 +86,13 @@ public class CartServiceImpl implements CartService {
 
         List<CartItem> cartItems = cart.getCartItems();
 
-        Stream<ProductDTO> productDTOStream = cartItems.stream().map(item -> {
+        List<ProductDTO> products = cartItems.stream().map(item -> {
             ProductDTO map = modelMapper.map(item.getProduct(), ProductDTO.class);
             map.setQuantity(item.getQuantity());
             return map;
-        });
+        }).toList();
 
-        cartDTO.setProducts(productDTOStream.toList());
+        cartDTO.setProducts(products);
 
         /* Return updated Cart */
         return cartDTO;
