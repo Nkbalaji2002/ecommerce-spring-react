@@ -108,7 +108,7 @@ public class CartServiceImpl implements CartService {
             throw new APIException("No Cart exist");
         }
 
-        List<CartDTO> cartDTOS = carts.stream()
+        return carts.stream()
                 .map(cart -> {
                     CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
                     List<ProductDTO> productDTOS = cart.getCartItems().stream()
@@ -118,8 +118,6 @@ public class CartServiceImpl implements CartService {
                     cartDTO.setProducts(productDTOS);
                     return cartDTO;
                 }).toList();
-
-        return cartDTOS;
     }
 
     @Override
@@ -138,7 +136,6 @@ public class CartServiceImpl implements CartService {
         return cartDTO;
     }
 
-    @Transactional
     @Override
     public CartDTO updateProductQuantityInCart(Long productId, Integer quantity) {
         String emailId = authUtil.loggedInEmail();
@@ -187,6 +184,24 @@ public class CartServiceImpl implements CartService {
 
         cartDTO.setProducts(productDTOStream.toList());
         return cartDTO;
+    }
+
+    @Override
+    public String deleteProductFromCart(Long cartId, Long productId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
+
+        CartItem cartItem = cartItemRepository.findCartItemByProductIdAndCartId(cartId, productId);
+
+        if (cartItem == null) {
+            throw new ResourceNotFoundException("Product", "productId", productId);
+        }
+
+        cart.setTotalPrice(cart.getTotalPrice() - (cartItem.getProductPrice() * cartItem.getQuantity()));
+
+        cartItemRepository.deleteCartItemByProductIdAndCartId(cartId, productId);
+
+        return "Product " + cartItem.getProduct().getProductName() + " removed from the cart.";
     }
 
     private Cart createCart() {
