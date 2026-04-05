@@ -1,5 +1,6 @@
 package in.ecom.server.service.impl;
 
+import in.ecom.server.exceptions.ResourceNotFoundException;
 import in.ecom.server.model.Address;
 import in.ecom.server.model.User;
 import in.ecom.server.payload.AddressDTO;
@@ -41,6 +42,14 @@ public class AddressServiceImpl implements AddressService {
         return addresses.stream()
                 .map(address -> modelMapper.map(address, AddressDTO.class))
                 .toList();
+    }
+
+    @Override
+    public AddressDTO getAddressById(Long addressId) {
+        Address address = addressRepository.findById(addressId)
+                .orElseThrow(() -> new ResourceNotFoundException("Address", "addressId", addressId));
+
+        return modelMapper.map(address, AddressDTO.class);
     }
 
 }
