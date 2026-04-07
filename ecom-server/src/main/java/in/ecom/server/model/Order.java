@@ -30,9 +30,9 @@ public class Order {
 
     private LocalDate localDate;
 
-//    @OneToOne
-//    @JoinColumn(name = "payment_id")
-//    private Payment payment;
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
     private Double totalAmount;
 
