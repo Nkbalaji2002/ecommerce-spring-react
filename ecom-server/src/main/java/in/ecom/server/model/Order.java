@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
@@ -28,7 +27,7 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private LocalDate localDate;
+    private LocalDate orderDate;
 
     @OneToOne
     @JoinColumn(name = "payment_id")
