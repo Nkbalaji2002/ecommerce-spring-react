@@ -4,6 +4,8 @@ import in.ecom.server.config.AppConstants;
 import in.ecom.server.payload.CategoryDTO;
 import in.ecom.server.payload.CategoryResponse;
 import in.ecom.server.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,8 @@ public class CategoryController {
         return new ResponseEntity<>("Echoed Message : " + message, HttpStatus.OK);
     }
 
+    @Tag(name = "Category APIs", description = "APIs for Managing Categories")
+    @Operation(summary = "Get All Categories")
     @GetMapping("/public/categories")
     public ResponseEntity<?> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
@@ -36,18 +40,25 @@ public class CategoryController {
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
     }
 
+    @Tag(name = "Category APIs", description = "APIs for Managing Categories")
+    @Operation(summary = "Create Category")
     @PostMapping("/admin/categories")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
 
+    @Tag(name = "Category APIs", description = "APIs for Managing Categories")
+    @Operation(summary = "Remove Category")
     @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
         CategoryDTO category = categoryService.delete(categoryId);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
+
+    @Tag(name = "Category APIs", description = "APIs for Managing Categories")
+    @Operation(summary = "Update Category")
     @PutMapping("/admin/categories/{categoryId}")
     public ResponseEntity<?> updateCategory(@Valid @RequestBody CategoryDTO categoryDTO, @PathVariable Long categoryId) {
         var savedCategoryDto = categoryService.update(categoryDTO, categoryId);

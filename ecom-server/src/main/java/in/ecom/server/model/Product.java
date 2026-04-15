@@ -11,7 +11,6 @@ import java.util.List;
 @Entity(name = "products")
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
