@@ -52,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
     @Value("${project.image}")
     private String path;
 
+    @Value("${image.base.url}")
+    private String imageBaseUrl;
+
     @Override
     public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
 
@@ -94,7 +97,11 @@ public class ProductServiceImpl implements ProductService {
         var pageProducts = productRepository.findAll(pageDetails);
 
         var products = pageProducts.getContent();
-        var productDTOs = products.stream().map(product -> modelMapper.map(product, ProductDTO.class)).toList();
+        var productDTOs = products.stream().map(product -> {
+            ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
+            productDTO.setImage(constructImageUrl(product.getImage()));
+            return productDTO;
+        }).toList();
 
         var productResponse = new ProductResponse();
         productResponse.setContent(productDTOs);
@@ -105,6 +112,11 @@ public class ProductServiceImpl implements ProductService {
         productResponse.setLastPage(pageProducts.isLast());
         return productResponse;
     }
+
+    public String constructImageUrl(String imageName) {
+        return imageBaseUrl.endsWith("/") ? imageBaseUrl + imageName : imageBaseUrl + "/" + imageName;
+    }
+
 
     @Override
     public ProductResponse searchByCategory(Long categoryId, Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
