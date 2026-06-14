@@ -3,14 +3,17 @@ import { FaBeer } from "react-icons/fa";
 import Products from "./components/Products";
 import { Provider } from "react-redux";
 import store from "./store/reducers/store";
+import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
   return (
     <>
       <Provider store={store}>
-        <div>
-          <Products />
-        </div>
+        <BrowserRouter>
+          <>
+            <Products />
+          </>
+        </BrowserRouter>
       </Provider>
     </>
   );

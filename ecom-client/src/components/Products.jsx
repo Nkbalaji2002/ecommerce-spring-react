@@ -4,6 +4,7 @@ import { FaExclamationTriangle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/actions";
 import Filter from "./Filter";
+import useProductFilter from "./useProductFilter";
 
 const Products = () => {
   const { isLoading, errorMessage } = useSelector((state) => state.errors);
@@ -12,9 +13,7 @@ const Products = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchProducts);
-  }, [dispatch]);
+  useProductFilter();
 
   return (
     <>
