@@ -12,6 +12,7 @@ const ProductCard = ({
   price,
   discount,
   specialPrice,
+  about = false,
 }) => {
   const [openProductViewModal, setOpenProductViewModal] = useState(false);
   const btnLoader = false;
@@ -19,15 +20,17 @@ const ProductCard = ({
   const isAvailable = quantity && Number(quantity) > 0;
 
   const handleProductView = (product) => {
-    setSelectedViewProduct(product);
-    setOpenProductViewModal(true);
+    if (!about) {
+      setSelectedViewProduct(product);
+      setOpenProductViewModal(true);
+    }
   };
 
   return (
     <>
       <div className="border rounded-lg shadow-xl overflow-hidden transition-shadow duration-500">
         <div
-          className="w-full overflow-hidden aspect-[3/2]"
+          className="w-full overflow-hidden aspect-3/2"
           onClick={() => {
             handleProductView({
               id: productId,
@@ -73,37 +76,41 @@ const ProductCard = ({
             </p>
           </div>
 
-          {/* Special Price */}
-          <div className="flex items-center justify-between">
-            {specialPrice ? (
-              <div className="flex flex-col">
-                <span className="text-gray-400 line-through">
-                  ${Number(price).toFixed(2)}
-                </span>
-                <span className="text-slate-700 text-xl font-bold">
-                  ${Number(specialPrice).toFixed(2)}
-                </span>
-              </div>
-            ) : (
-              <>
-                <span className="text-slate-700 text-xl font-bold">
-                  {" "}
-                  ${Number(price).toFixed(2)}
-                </span>
-              </>
-            )}
+          {!about && (
+            <>
+              {/* Special Price */}
+              <div className="flex items-center justify-between">
+                {specialPrice ? (
+                  <div className="flex flex-col">
+                    <span className="text-gray-400 line-through">
+                      ${Number(price).toFixed(2)}
+                    </span>
+                    <span className="text-slate-700 text-xl font-bold">
+                      ${Number(specialPrice).toFixed(2)}
+                    </span>
+                  </div>
+                ) : (
+                  <>
+                    <span className="text-slate-700 text-xl font-bold">
+                      {" "}
+                      ${Number(price).toFixed(2)}
+                    </span>
+                  </>
+                )}
 
-            <button
-              disabled={!isAvailable || btnLoader}
-              onClick={() => {}}
-              className={`bg-blue-500 text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center ${
-                isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
-              }`}
-            >
-              {<FaShoppingCart className="mr-2" />}
-              {isAvailable ? "Add to Cart" : "Stock Out"}
-            </button>
-          </div>
+                <button
+                  disabled={!isAvailable || btnLoader}
+                  onClick={() => {}}
+                  className={`bg-blue-500 text-white py-2 px-3 rounded-lg items-center transition-colors duration-300 w-36 flex justify-center ${
+                    isAvailable ? "opacity-100 hover:bg-blue-600" : "opacity-70"
+                  }`}
+                >
+                  {<FaShoppingCart className="mr-2" />}
+                  {isAvailable ? "Add to Cart" : "Stock Out"}
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         <ProductViewModal

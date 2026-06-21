@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <div className="h-17.5 bg-custom-gradient z-50 text-white flex items-center sticky top-0">
-        <div className="lg:pl-14 sm:px-8 px-4 w-full flex justify-between">
+        <div className="lg:px-14 sm:px-8 px-4 w-full flex justify-between">
           <Link to="/" className="flex items-center text-2xl font-bold">
             <FaStore className="mr-2 text-3xl" />
             <span className="font-[Poppins]">E-Shop</span>
