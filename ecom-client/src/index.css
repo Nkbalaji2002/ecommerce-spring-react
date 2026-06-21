@@ -50,3 +50,8 @@ layer(base);
     border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important;
+}
