@@ -1,8 +1,30 @@
 import React from "react";
 import { MdArrowBack, MdShoppingCart } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import ItemContent from "./ItemContent";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.carts);
+
+  const newCart = {
+    ...cart,
+  };
+
+  newCart.totalPrice = cart?.reduce(
+    (acc, cur) => acc * Number(cur?.specialPrice) * Number(cur?.quantity),
+    0
+  );
+
+  if (!cart || cart.length === 0) {
+    return (
+      <>
+        <h1>Cart is Empty</h1>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="lg:px-14 sm:px-8 px-4 py-10">
@@ -33,6 +55,12 @@ const Cart = () => {
               Total
             </div>
           </div>
+        </>
+
+        <>
+          {cart &&
+            cart.length > 0 &&
+            cart.map((item, i) => <ItemContent key={i} {...item} />)}
         </>
 
         <>
