@@ -92,3 +92,52 @@ export const addToCart =
       toast.error(`Out of Stock`);
     }
   };
+
+export const increaseCartQuantity =
+  (data, toast, currentQty, setCurrentQty) => (dispatch, getState) => {
+    // Find the Product
+    const { products } = getState().products;
+
+    const getProduct = products.find(
+      (item) => item.productId === data.productId
+    );
+
+    const isQuantityExist = getProduct.quantity >= currentQty + 1;
+
+    if (isQuantityExist) {
+      const newQuantity = currentQty + 1;
+      setCurrentQty(newQuantity);
+
+      dispatch({
+        type: "ADD_CART",
+        payload: { ...data, quantity: newQuantity + 1 },
+      });
+
+      localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+    } else {
+      toast.error(`Quantitiy Reached to Limit`);
+    }
+  };
+
+export const decreaseCartQuantity =
+  (data, newQuantity) => (dispatch, getState) => {
+    dispatch({
+      type: "ADD_CART",
+      payload: {
+        ...data,
+        quantity: newQuantity,
+      },
+    });
+
+    localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+  };
+
+export const removeFromCart = (data, toast) => (dispatch, getState) => {
+  dispatch({
+    type: "REMOVE_CART",
+    payload: data,
+  });
+
+  toast.success(`${data.productName} removed from cart`);
+  localStorage.setItem("cartItems", JSON.stringify(getState().carts.cart));
+};

@@ -18,15 +18,17 @@ const SetQuantity = ({
         )}
 
         <div className="flex md:flex-row flex-col gap-4 items-center lg:text-[22px] text-sm">
-          <button className={btnStyles} disabled={quantity <= 1}>
+          <button
+            className={btnStyles}
+            disabled={quantity <= 1}
+            onClick={handleQtyDecrease}
+          >
             -
           </button>
 
-          <div className="text-red-500">
-            {quantity}
-          </div>
+          <div className="text-red-500">{quantity}</div>
 
-          <button className={btnStyles} disabled={quantity <= 1}>
+          <button className={btnStyles} onClick={handleQtyIncrease}>
             +
           </button>
         </div>
