@@ -33,7 +33,7 @@ const InputField = ({
             className={`${
               className ? className : ""
             } px-2 py-2 border outline-none bg-transparent text-slate-800 rounded-md ${
-              errors(id)?.message ? "border-red-500" : "border-slate-700"
+              errors[id]?.message ? "border-red-500" : "border-slate-700"
             }`}
             {...register(id, {
               required: { value: required, message },
@@ -60,10 +60,10 @@ const InputField = ({
           />
         </>
 
-        {errors(id)?.message && (
+        {errors[id]?.message && (
           <>
             <p className="text-sm font-semibold text-red-600 mt-0">
-              {errors(id)?.message}
+              {errors[id]?.message}
             </p>
           </>
         )}
