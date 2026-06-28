@@ -5,6 +5,7 @@ import { BiUser } from "react-icons/bi";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoIosExit } from "react-icons/io";
 import { useSelector } from "react-redux";
+import BackDrop from "./BackDrop";
 
 const UserMenu = () => {
   const id = React.useId();
@@ -68,11 +69,13 @@ const UserMenu = () => {
 
           <MenuItem className="flex gap-2" onClick={logOutHandler}>
             <span className="font-semibold w-full flex gap-2 items-center bg-button-gradient px-4 py-1 text-white rounded-sm">
-            <IoIosExit className="text-xl" />
+              <IoIosExit className="text-xl" />
               Logout
             </span>
           </MenuItem>
         </Menu>
+
+        {open && <BackDrop />}
       </>
     </>
   );
