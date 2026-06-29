@@ -11,6 +11,8 @@ import Contact from "./components/Contact";
 import { Toaster } from "react-hot-toast";
 import Cart from "./components/cart/Cart";
 import Login from "./components/auth/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Register from "./components/auth/Register";
 
 const App = () => {
   return (
@@ -24,7 +26,10 @@ const App = () => {
             <Route path="/about" Component={About} />
             <Route path="/contact" Component={Contact} />
             <Route path="/cart" Component={Cart} />
-            <Route path="/login" Component={Login} />
+            <Route path="/" element={<PrivateRoute publicPage />}>
+              <Route path="/login" Component={Login} />
+              <Route path="/register" Component={Register} />
+            </Route>
           </Routes>
         </Router>
         <>
